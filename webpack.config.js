@@ -13,67 +13,82 @@ const filename = (extension) => isDevelopment ?
                             `bundle.${extension}` :
                             `bundle.[hash].${extension}`;
 
+const getJsLoaders = () => {
+  const loaders = [ {
+    loader: 'babel-loader',
+    options: {
+      presets: [ '@babel/preset-env' ],
+    },
+  } ];
+
+  if (isDevelopment) {
+    loaders.push('eslint-loader');
+  }
+};
+
 module.exports = {
-    context: path.resolve(__dirname, 'src'),
-    mode: 'development',
-    entry: ['@babel/polyfill', './index.js'],
-    output: {
-        filename: filename('js'),
-        path: path.resolve(__dirname, 'dist')
+  context: path.resolve(__dirname, 'src'),
+  mode: 'development',
+  entry: [ '@babel/polyfill', './index.js' ],
+  output: {
+    filename: filename('js'),
+    path: path.resolve(__dirname, 'dist'),
+  },
+  resolve: {
+    extensions: [ '.js' ],
+    alias: {
+      '@': path.resolve(__dirname, 'src'),
+      '@core': path.resolve(__dirname, 'src/core'),
     },
-    resolve: {
-        extensions: ['.js'],
-        alias: {
-            '@': path.resolve(__dirname, 'src'),
-            '@core': path.resolve(__dirname, 'src/core')
-        }
-    },
-    devtool: isDevelopment ? 'source-map' : false,
-    devServer: {
-        port: 3000,
-        hot: isDevelopment
-    },
-    plugins: [
-        new CleanWebpackPlugin(),
-        new HtmlWebpackPlugin({
-            template: 'index.html',
-            minify: {
-                removeComments: isProduction,
-                collapseWhitespace: isProduction
-            }
-        }),
-        new copyWebpackPlugin({
-            patterns: [
-                {
-                    from: path.resolve(__dirname, 'src/favicon.ico'),
-                    to: path.resolve(__dirname, 'dist')
-                }
-            ]
-        }),
-        new MiniCssExtractPlugin({
-            filename: filename('css')
-        })
-    ],
-    module: {
-        rules: [
-            {
-                test: /\.s[ac]ss$/i,
-                use: [
-                    MiniCssExtractPlugin.loader,
-                    'css-loader',
-                    'sass-loader'
-                ]
+  },
+  devtool: isDevelopment ? 'source-map' : false,
+  devServer: {
+    port: 3000,
+    hot: isDevelopment,
+  },
+  plugins: [
+    new CleanWebpackPlugin(),
+    new HtmlWebpackPlugin({
+      template: 'index.html',
+      minify: {
+        removeComments: isProduction,
+        collapseWhitespace: isProduction,
+      },
+    }),
+    // eslint-disable-next-line new-cap
+    new copyWebpackPlugin({
+      patterns: [
+        {
+          from: path.resolve(__dirname, 'src/favicon.ico'),
+          to: path.resolve(__dirname, 'dist'),
+        },
+      ],
+    }),
+    new MiniCssExtractPlugin({
+      filename: filename('css'),
+    }),
+  ],
+  module: {
+    rules: [
+      {
+        test: /\.s[ac]ss$/i,
+        use: [
+          {
+            loader: MiniCssExtractPlugin.loader,
+            options: {
+              hmr: isDevelopment,
+              reloadAll: true,
             },
-            {
-                test: /\.js$/i,
-                exclude: /node_modules/,
-                loader: {
-                    loader: 'babel-loader',
-                    options: {
-                        presets: ['@babel/preset-env']
-                    }
-                }
-            }
-        ]
-    }
+          },
+          'css-loader',
+          'sass-loader',
+        ],
+      },
+      {
+        test: /\.js$/i,
+        exclude: /node_modules/,
+        use: getJsLoaders(),
+      },
+    ],
+  },
 };

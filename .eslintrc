@@ -1,0 +1,24 @@
+{
+    "parser": "babel-eslint",
+    "env": {
+        "es6": true,
+        "browser": true,
+        "node": true
+    },
+    "extends": [
+        "eslint:recommended",
+        "google"
+    ],
+    "rules": {
+        "object-curly-newline": "error",
+        "object-curly-spacing": [
+            "error",
+            "always"
+        ],
+        "array-bracket-newline": "off",
+        "array-bracket-spacing": [
+            "error",
+            "always"
+        ]
+    }
+}
