@@ -3,7 +3,7 @@ const path = require('path');
 // Plugins
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const copyWebpackPlugin = require('copy-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 const isProduction = process.env.NODE_ENV === 'production';
@@ -55,8 +55,7 @@ module.exports = {
         collapseWhitespace: isProduction,
       },
     }),
-    // eslint-disable-next-line new-cap
-    new copyWebpackPlugin({
+    new CopyWebpackPlugin({
       patterns: [
         {
           from: path.resolve(__dirname, 'src/favicon.ico'),
