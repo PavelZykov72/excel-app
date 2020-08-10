@@ -25,7 +25,6 @@
   "homepage": "https://github.com/PavelZykov72/excel-app#readme",
   "devDependencies": {
     "@babel/core": "^7.11.1",
-    "@babel/polyfill": "^7.10.4",
     "@babel/preset-env": "^7.11.0",
     "babel-eslint": "^10.1.0",
     "babel-loader": "^8.1.0",
@@ -46,5 +45,8 @@
     "webpack-copy-plugin": "0.0.4",
     "webpack-dev-server": "^3.11.0",
     "webpack-html-plugin": "^0.1.1"
+  },
+  "dependencies": {
+    "@babel/polyfill": "^7.10.4"
   }
 }
