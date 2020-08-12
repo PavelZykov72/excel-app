@@ -10,6 +10,9 @@
         "google"
     ],
     "rules": {
+        "require-jsdoc": "off",
+        "indent": [ "off", 2 ],
+        "indent-legacy": "off",
         "object-curly-newline": "error",
         "object-curly-spacing": [
             "error",
