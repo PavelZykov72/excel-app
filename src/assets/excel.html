@@ -1,84 +1,82 @@
 <!DOCTYPE html>
 <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Excel Application</title>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Excel Application</title>
+        <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    </head>
 
-    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-</head>
+    <body>
+        <div id="app" class="container">
 
-<body>
-    <div id="app" class="container">
+            <div class="excel">
+                <div class="excel__header header">
+                    <input type="text" class="header__input" value="Новая таблица"></input>
 
-        <div class="excel">
-            <div class="excel__header header">
-                <input type="text" class="header__input" value="Новая таблица"></input>
-
-                <div>
-                    <div class="header__button">
-                        <i class="material-icons">delete</i>
+                    <div>
+                        <div class="header__button">
+                            <i class="material-icons">delete</i>
+                        </div>
+                        <div class="header__button">
+                            <i class="material-icons">exit_to_app</i>
+                        </div>
                     </div>
-                    <div class="header__button">
-                        <i class="material-icons">exit_to_app</i>
+                </div>
+                <div class="excel__toolbar toolbar">
+                    <div class="toolbar__button">
+                        <i class="material-icons">format_align_left</i>
+                    </div>
+                    <div class="toolbar__button">
+                        <i class="material-icons">format_align_center</i>
+                    </div>
+                    <div class="toolbar__button">
+                        <i class="material-icons">format_align_right</i>
+                    </div>
+                    <div class="toolbar__button">
+                        <i class="material-icons">format_bold</i>
+                    </div>
+                    <div class="toolbar__button">
+                        <i class="material-icons">format_italic</i>
+                    </div>
+                    <div class="toolbar__button">
+                        <i class="material-icons">format_underline</i>
+                    </div>
+                </div>
+                <div class="excel__formula formula">
+                    <div class="formula__info">fx</div>
+                    <div class="formula__input" contenteditable spellcheck="false"></div>
+                </div>
+                <div class="excel__table table">
+                    <div class="table__row">
+                        <div class="table__row-info"></div>
+                        <div class="table__row-data">
+                            <div class="table__column">A</div>
+                            <div class="table__column">B</div>
+                            <div class="table__column">C</div>
+                        </div>
+                    </div>
+                    <div class="table__row">
+                        <div class="table__row-info">1</div>
+                        <div class="table__row-data">
+                            <div class="table__cell table__cell--selected" contenteditable>A1</div>
+                            <div class="table__cell" contenteditable>B1</div>
+                            <div class="table__cell" contenteditable>C1</div>
+                        </div>
+                    </div>
+                    <div class="table__row">
+                        <div class="table__row-info">1</div>
+                        <div class="table__row-data">
+                            <div class="table__cell" contenteditable>A1</div>
+                            <div class="table__cell" contenteditable>B1</div>
+                            <div class="table__cell" contenteditable>C1</div>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="excel__toolbar toolbar">
-                <div class="toolbar__button">
-                    <i class="material-icons">format_align_left</i>
-                </div>
-                <div class="toolbar__button">
-                    <i class="material-icons">format_align_center</i>
-                </div>
-                <div class="toolbar__button">
-                    <i class="material-icons">format_align_right</i>
-                </div>
-                <div class="toolbar__button">
-                    <i class="material-icons">format_bold</i>
-                </div>
-                <div class="toolbar__button">
-                    <i class="material-icons">format_italic</i>
-                </div>
-                <div class="toolbar__button">
-                    <i class="material-icons">format_underline</i>
-                </div>
-            </div>
-            <div class="excel__formula formula">
-                <div class="formula__info">fx</div>
-                <div class="formula__input" contenteditable spellcheck="false"></div>
-            </div>
-            <div class="excel__table table">
-                <div class="table__row">
-                    <div class="table__row-info"></div>
-                    <div class="table__row-data">
-                        <div class="table__column">A</div>
-                        <div class="table__column">B</div>
-                        <div class="table__column">C</div>
-                    </div>
-                </div>
-                <div class="table__row">
-                    <div class="table__row-info">1</div>
-                    <div class="table__row-data">
-                        <div class="table__cell table__cell--selected" contenteditable>A1</div>
-                        <div class="table__cell" contenteditable>B1</div>
-                        <div class="table__cell" contenteditable>C1</div>
-                    </div>
-                </div>
-                <div class="table__row">
-                    <div class="table__row-info">1</div>
-                    <div class="table__row-data">
-                        <div class="table__cell" contenteditable>A1</div>
-                        <div class="table__cell" contenteditable>B1</div>
-                        <div class="table__cell" contenteditable>C1</div>
-                    </div>
-                </div>
-            </div>
+
         </div>
-
-    </div>
-</body>
-
+    </body>
 </html>
