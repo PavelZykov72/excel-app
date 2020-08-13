@@ -18,12 +18,15 @@ const getJsLoaders = () => {
     loader: 'babel-loader',
     options: {
       presets: [ '@babel/preset-env' ],
+      plugins: [ '@babel/plugin-proposal-class-properties' ],
     },
   } ];
 
   if (isDevelopment) {
     loaders.push('eslint-loader');
   }
+
+  return loaders;
 };
 
 module.exports = {
