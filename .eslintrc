@@ -10,6 +10,7 @@
         "google"
     ],
     "rules": {
+        "operator-linebreak": [ "error", "before" ],
         "require-jsdoc": "off",
         "indent": [ "off", 2 ],
         "indent-legacy": "off",
