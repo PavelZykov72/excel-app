@@ -3,22 +3,35 @@ const CODES = {
     Z: 'Z'.charCodeAt(),
 };
 
-function createCell() {
+function createCell(_, index) {
     return `
-        <div class="table__cell" contenteditable></div>
+        <div
+            class="table__cell"
+            data-col-index="${index}"
+            contenteditable>
+        </div>
     `;
 }
 
-function createColumn(caption) {
+function createColumn(caption, index) {
     return `
-        <div class="table__column">${caption}</div>
+        <div
+            class="table__column"
+            data-col-index="${index}"
+            data-type="resizable">
+            ${caption}
+            <div class="table__column-resize" data-resize="column"></div>
+        </div>
     `;
 }
 
 function createRow(index, content) {
     return `
-        <div class="table__row">
-            <div class="table__row-info">${(index || '')}</div>
+        <div class="table__row" data-type="resizable">
+            <div class="table__row-info">
+                ${(index || '')}
+                <div class="table__row-resize" data-resize="row"></div>
+            </div>
             <div class="table__row-data">${content}</div>
         </div>
     `;

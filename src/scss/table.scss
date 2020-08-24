@@ -19,8 +19,26 @@
         height: $row-height;
     }
 
+    &__row-resize {
+        position: absolute;
+        right: 0;
+        left: 0;
+        bottom: 0;
+        height: 4px;
+        z-index: 1000;
+        background: $primary-color;
+        opacity: 0;
+
+        &:hover,
+        &:active {
+            opacity: 1;
+            cursor: row-resize;
+        }
+    }
+
     &__row-info {
         display: flex;
+        position: relative;
         align-items: center;
         justify-content: center;
         min-width: $info-cell-width;
@@ -36,6 +54,7 @@
 
     &__column {
         display: flex;
+        position: relative;
         align-items: center;
         justify-content: center;
         background: #f8f9fa;
@@ -46,6 +65,23 @@
         border-top: 0;
         border-left: 0;
         height: 100%;
+    }
+
+    &__column-resize {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        right: 0;
+        width: 4px;
+        z-index: 1000;
+        background: $primary-color;
+        opacity: 0;
+
+        &:hover,
+        &:active {
+            opacity: 1;
+            cursor: col-resize;
+        }
     }
 
     &__cell {
@@ -62,7 +98,7 @@
 
         &--selected {
             border: none;
-            outline: 2px solid #3c74ff;
+            outline: 2px solid $primary-color;
             z-index: 2;
         }
     }

@@ -67,6 +67,50 @@ class DOM {
 
         return this;
     }
+
+    get data() {
+        return this.$el.dataset;
+    }
+
+    /**
+     * Returns the first (starting at element) inclusive ancestor that matches
+     * selectors, and null otherwise.
+     * @param {String} selector
+     * @return {DOM} Element instance
+     */
+    closest(selector) {
+        return $(this.$el.closest(selector));
+    }
+
+    /**
+     * Get client rect $el
+     * @return {DOMRect}
+     */
+    getCoords() {
+        return this.$el.getBoundingClientRect();
+    }
+
+    /**
+     * Returns all element descendants of node that match selectors.
+     * @param {String} selector
+     * @return {NodeListOf<Element>}
+     */
+    findAll(selector) {
+        return this.$el.querySelectorAll(selector);
+    }
+
+    /**
+     * Set styles for $el
+     * @param {Object} styles
+     */
+    css(styles = {}) {
+        for (const [ key, value ] of Object.entries(styles)) {
+            if (!Object.prototype.hasOwnProperty.call(this.$el.style, key)) {
+                continue;
+            }
+            this.$el.style[key] = value;
+        }
+    }
 }
 
 export function $(selector) {
