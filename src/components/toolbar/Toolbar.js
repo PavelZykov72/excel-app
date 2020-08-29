@@ -2,11 +2,28 @@ import { ExcelComponent } from '@core/ExcelComponent';
 
 /** @class */
 export class Toolbar extends ExcelComponent {
+    /**
+     * @static className
+     */
     static className = 'excel__toolbar toolbar';
 
-    constructor($root) {
-        super($root);
+    /**
+     * @constructor
+     * @param {DOM} $root
+     * @param {Object} options
+     */
+    constructor($root, options) {
+        super($root, {
+            listeners: [ 'input' ],
+            ...options,
+        });
     }
+
+    /**
+     * Input event
+     * @param {Event} event
+     */
+    onInput(event) {}
 
     template = `
         <div class="toolbar__button">
