@@ -25,6 +25,24 @@ class DOM {
     }
 
     /**
+     * Get or set text content for element
+     * @param {String} [text]
+     * @return {String|DOM} Text Element | this
+     */
+    text(text) {
+        if (typeof text === 'string') {
+            this.$el.textContent = text;
+            return this;
+        }
+
+        if (this.$el.tagName === 'INPUT') {
+            return this.$el.value.trim();
+        }
+
+        return this.$el.textContent.trim();
+    }
+
+    /**
      * Clear HTML for current node
      * @return {DOM} this
      */
@@ -72,6 +90,24 @@ class DOM {
         return this.$el.dataset;
     }
 
+    get nativeElement() {
+        return this.$el;
+    }
+
+    id(parse) {
+        if (!parse) {
+            return this.data.id;
+        }
+
+        const id = this.id();
+        const [ row, col ] = id.split(':');
+
+        return {
+            row: +row,
+            col: +col,
+        };
+    }
+
     /**
      * Returns the first (starting at element) inclusive ancestor that matches
      * selectors, and null otherwise.
@@ -100,6 +136,16 @@ class DOM {
     }
 
     /**
+     * Returns the first element that is a descendant
+     * of node that matches selectors.
+     * @param {String} selector
+     * @return {Element}
+     */
+    find(selector) {
+        return $(this.$el.querySelector(selector));
+    }
+
+    /**
      * Set styles for $el
      * @param {Object} styles
      */
@@ -110,6 +156,36 @@ class DOM {
             }
             this.$el.style[key] = value;
         }
+    }
+
+    /**
+     * Focus element
+     * @param {Object} [FocusOptions]
+     * @return {DOM} this
+     */
+    focus(FocusOptions) {
+        this.$el.focus(FocusOptions);
+        return this;
+    }
+
+    /**
+     * Add classes to element
+     * @param {String} classes
+     * @return {DOM} this
+     */
+    addClass(classes) {
+        this.$el.classList.add(...classes.split(' '));
+        return this;
+    }
+
+    /**
+     * Remove classes
+     * @param {String} classes
+     * @return {DOM} this
+     */
+    removeClass(classes) {
+        this.$el.classList.remove(...classes.split(' '));
+        return this;
     }
 }
 

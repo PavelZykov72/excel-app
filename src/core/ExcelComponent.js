@@ -9,7 +9,32 @@ export class ExcelComponent extends DOMListener {
      */
     constructor($root, options = {}) {
         super($root, options.listeners);
+
+        this.unsubscribers = [];
         this.name = options.name || this.constructor.name;
+        this.emitter = options.emitter;
+
+        this.prepare();
+    }
+
+    /**
+     * Prepare data hook
+     */
+    prepare() {}
+
+    /**
+     * Init Component hook
+     */
+    init() {
+        this.initDOMListeners();
+    }
+
+    /**
+     * Destroy component hook
+     */
+    destroy() {
+        this.removeDOMListeners();
+        this.unsubscribers.forEach((unsubscriber) => unsubscriber());
     }
 
     /**
@@ -17,20 +42,25 @@ export class ExcelComponent extends DOMListener {
      * @return {String} DOM element
      */
     toHTML() {
-        return this.template || '';
+      return this.template || '';
     }
 
     /**
-     * Init Component
+     * Emit (facade pattern)
+     * @param {String} name
+     * @param  {...any} args
      */
-    init() {
-        this.initDOMListeners();
+    $emit(...args) {
+      this.emitter.emit(...args);
     }
 
     /**
-     * Destroy component
+     * Subscribe (facade pattern)
+     * @param {String} name
+     * @param {Function} fn
      */
-    destroy() {
-        this.removeDOMListeners();
+    $on(...args) {
+      const unsubscriber = this.emitter.subscribe(...args);
+      this.unsubscribers.push(unsubscriber);
     }
 }

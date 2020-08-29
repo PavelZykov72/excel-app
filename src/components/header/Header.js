@@ -2,7 +2,21 @@ import { ExcelComponent } from '@core/ExcelComponent';
 
 /** @class */
 export class Header extends ExcelComponent {
+    /**
+     * @static className
+     */
     static className = 'excel__header header';
+
+    /**
+     * @constructor
+     * @param {DOM} $root
+     * @param {Object} options
+     */
+    constructor($root, options) {
+        super($root, {
+            ...options,
+        });
+    }
 
     template = `
         <input

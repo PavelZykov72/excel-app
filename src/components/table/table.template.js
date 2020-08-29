@@ -3,14 +3,18 @@ const CODES = {
     Z: 'Z'.charCodeAt(),
 };
 
-function createCell(_, index) {
-    return `
-        <div
-            class="table__cell"
-            data-col-index="${index}"
-            contenteditable>
-        </div>
-    `;
+function createCell(rowi) {
+    return function(_, celli) {
+        return `
+            <div
+                class="table__cell"
+                data-type="cell"
+                data-id="${rowi}:${celli}"
+                data-col-index="${celli}"
+                contenteditable>
+            </div>
+        `;
+    };
 }
 
 function createColumn(caption, index) {
@@ -41,17 +45,16 @@ function toChar(_, index) {
     return String.fromCharCode(CODES.A + index);
 }
 
-export function createTable(rowsCount = 15) {
-    const colsCount = CODES.Z - CODES.A + 1;
+export function createTable(rowsCount = 15, colsCount = CODES.Z - CODES.A + 1) {
     const rows = [];
 
     const baseLine = new Array(colsCount).fill('');
     const cols = baseLine.map(toChar).map(createColumn).join('');
-    const cells = baseLine.map(createCell).join('');
 
     rows.push(createRow(void 0, cols));
-    for (let i = 0; i < rowsCount; i++) {
-        rows.push(createRow(i + 1, cells));
+    for (let row = 0; row < rowsCount; row++) {
+        const cells = baseLine.map(createCell(row)).join('');
+        rows.push(createRow(row + 1, cells));
     }
 
     return rows.join('');
