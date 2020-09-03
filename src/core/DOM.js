@@ -26,12 +26,16 @@ class DOM {
 
     /**
      * Get or set text content for element
-     * @param {String} [text]
+     * @param {any} [text]
      * @return {String|DOM} Text Element | this
      */
     text(text) {
-        if (typeof text === 'string') {
-            this.$el.textContent = text;
+        if (typeof text !== 'undefined') {
+            if (this.$el.tagName === 'INPUT') {
+                this.$el.value = `${text}`;
+            } else {
+                this.$el.textContent = `${text}`;
+            }
             return this;
         }
 
@@ -94,6 +98,11 @@ class DOM {
         return this.$el;
     }
 
+    /**
+     * Get id for element, if parse = true - "id "parsed for row, col
+     * @param {Boolean} [parse]
+     * @return {String|Object} id or object with row, col
+     */
     id(parse) {
         if (!parse) {
             return this.data.id;
@@ -106,6 +115,21 @@ class DOM {
             row: +row,
             col: +col,
         };
+    }
+
+    /**
+     * Get or set attribute for element
+     * @param {String} name
+     * @param {String} value
+     * @return {DOM|string} this instance or attribute value
+     */
+    attr(name, value) {
+        if (value) {
+            this.$el.setAttribute(name, value);
+            return this;
+        }
+
+        return this.$el.getAttribute(name);
     }
 
     /**
@@ -156,6 +180,17 @@ class DOM {
             }
             this.$el.style[key] = value;
         }
+    }
+
+    /**
+     * Get style values for specify list
+     * @param {Array<string>} styles
+     * @return {Object} current styles
+     */
+    getStyles(styles = []) {
+        return styles.reduce((res, s) => {
+            return (res[s] = this.$el.style[s], res);
+        }, {});
     }
 
     /**

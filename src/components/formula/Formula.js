@@ -18,6 +18,7 @@ export class Formula extends ExcelComponent {
     constructor($root, options) {
         super($root, {
             listeners: [ 'input', 'keydown' ],
+            subscribe: [ 'currentText' ],
             ...options,
         });
     }
@@ -30,11 +31,16 @@ export class Formula extends ExcelComponent {
 
         this.$formula = this.$root.find('#formula');
         this.$on('table:select', ($cell) => {
-            this.$formula.text($cell.text());
+            this.$formula.text($cell.data.value);
         });
-        this.$on('table:input', ($cell) => {
-            this.$formula.text($cell.text());
-        });
+    }
+
+    /**
+     * Get only changed subscribe fields for component
+     * @param {Object} changes field
+     */
+    storeChanged({ currentText }) {
+        this.$formula.text(currentText);
     }
 
     /**

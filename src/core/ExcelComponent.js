@@ -12,7 +12,9 @@ export class ExcelComponent extends DOMListener {
 
         this.unsubscribers = [];
         this.name = options.name || this.constructor.name;
+        this.subscribe = options.subscribe || [];
         this.emitter = options.emitter;
+        this.store = options.store;
 
         this.prepare();
     }
@@ -47,7 +49,6 @@ export class ExcelComponent extends DOMListener {
 
     /**
      * Emit (facade pattern)
-     * @param {String} name
      * @param  {...any} args
      */
     $emit(...args) {
@@ -56,11 +57,32 @@ export class ExcelComponent extends DOMListener {
 
     /**
      * Subscribe (facade pattern)
-     * @param {String} name
-     * @param {Function} fn
+     * @param  {...any} args
      */
     $on(...args) {
       const unsubscriber = this.emitter.subscribe(...args);
       this.unsubscribers.push(unsubscriber);
+    }
+
+    /**
+     * Dispatch action to store (facade pattern)
+     * @param  {...any} args
+     */
+    $dispatch(...args) {
+      this.store.dispatch(...args);
+    }
+
+    /**
+     * Get only changed subscribe fields for component
+     */
+    storeChanged() {}
+
+    /**
+     * Check if the key in subscribe component
+     * @param {String} key
+     * @return {Boolean} is watching field
+     */
+    isWatching(key) {
+      return this.subscribe.includes(key);
     }
 }

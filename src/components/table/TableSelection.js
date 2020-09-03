@@ -13,6 +13,14 @@ export class TableSelection {
     }
 
     /**
+     * Get all selected elements ids
+     * @return {Array<string>} ids
+     */
+    get selected() {
+        return this.group.map(($el) => $el.id());
+    }
+
+    /**
      * Select cell
      * @param {HTMLElement} $el
      */
@@ -36,6 +44,14 @@ export class TableSelection {
         this.group.forEach(($el) =>
             $el.addClass(TableSelection.classes.selected)
         );
+    }
+
+    /**
+     * Apply style from toolbar
+     * @param {Object} style
+     */
+    applyStyle(style) {
+        this.group.forEach(($el) => $el.css(style));
     }
 
     /**
