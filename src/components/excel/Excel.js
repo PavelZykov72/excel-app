@@ -2,6 +2,7 @@ import { $ } from '@/core/DOM';
 import { Emitter } from '@/core/Emitter';
 import { StoreSubscriber } from '@/core/StoreSubscriber';
 import { updateDate } from '@/store/actions';
+import { preventDefault } from '@/core/utils';
 
 /** @class */
 export class Excel {
@@ -43,6 +44,9 @@ export class Excel {
      * Init Component hook
      */
     init() {
+        if (process.env.NODE_ENV === 'production') {
+            document.addEventListener('contextmenu', preventDefault);
+        }
         this.store.dispatch(updateDate());
         this.subscriber.subscribeComponents(this.components);
         this.components.forEach((component) => component.init());
@@ -54,5 +58,6 @@ export class Excel {
     destroy() {
         this.subscriber.unsubscribeFromStore();
         this.components.forEach((component) => component.destroy());
+        document.removeEventListener('contextmenu', preventDefault);
     }
 }
