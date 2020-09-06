@@ -3,6 +3,7 @@ import { ExcelComponent } from '@core/ExcelComponent';
 import { changeTitle } from '@/store/actions';
 import { defaultTitle } from '@/constants';
 import { debounce } from '@/core/utils';
+import { ActiveRoute } from '@/core/routes/ActiveRouter';
 
 /** @class */
 export class Header extends ExcelComponent {
@@ -18,7 +19,7 @@ export class Header extends ExcelComponent {
      */
     constructor($root, options) {
         super($root, {
-            listeners: [ 'input' ],
+            listeners: [ 'input', 'click' ],
             subscribe: [ 'title' ],
             ...options,
         });
@@ -66,6 +67,29 @@ export class Header extends ExcelComponent {
         this.updateTitleInStore($(event.target).text());
     }
 
+    /**
+     * Click event
+     * @param {Event} event
+     */
+    onClick(event) {
+        const $target = $(event.target);
+
+
+        if ($target.data.button === 'remove') {
+            const decision = confirm(
+                `Вы действительно хотите удалить страницу?`
+            );
+
+            if (decision) {
+                localStorage.removeItem(`excel:${ActiveRoute.param}`);
+                ActiveRoute.navigate('');
+            }
+        }
+        if ($target.data.button === 'exit') {
+            ActiveRoute.navigate('');
+        }
+    }
+
     template = `
         <input
             type="text"
@@ -74,11 +98,11 @@ export class Header extends ExcelComponent {
             value="Новая таблица"></input>
 
         <div>
-            <div class="header__button">
-                <i class="material-icons">delete</i>
+            <div class="header__button" data-button="remove">
+                <i class="material-icons" data-button="remove">delete</i>
             </div>
-            <div class="header__button">
-                <i class="material-icons">exit_to_app</i>
+            <div class="header__button" data-button="exit">
+                <i class="material-icons" data-button="exit">exit_to_app</i>
             </div>
         </div>
     `
