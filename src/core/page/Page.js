@@ -5,8 +5,7 @@ export class Page {
      * @param {*} params
      */
     constructor(params) {
-        this.params = params;
-        console.log(this.params);
+        this.params = params || Date.now().toString();
     }
 
     /**
