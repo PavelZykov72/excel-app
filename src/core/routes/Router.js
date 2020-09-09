@@ -1,5 +1,6 @@
 import { $ } from '../DOM';
 import { ActiveRoute } from './ActiveRouter';
+import { Loader } from '../../components/Loader';
 
 /** @class */
 export class Router {
@@ -12,6 +13,8 @@ export class Router {
         if (!selector) {
             throw new Error('Selector is not provided in Router');
         }
+
+        this.loader = new Loader();
 
         this.$placeholder = $(selector);
         this.routes = routes;
@@ -39,17 +42,20 @@ export class Router {
     /**
      * Change hash location event
      */
-    changePageHandler(/* event */) {
+    async changePageHandler(/* event */) {
         if (this.page) {
             this.page.destroy();
         }
+
+        this.$placeholder.clear().append(this.loader);
         const Page = ActiveRoute.path.includes('excel')
             ? this.routes.excel
             : this.routes.dashboard;
 
-        console.log(ActiveRoute.param);
         this.page = new Page(ActiveRoute.param);
-        this.$placeholder.clear().append(this.page.getRoot());
+
+        const $root = await this.page.getRoot();
+        this.$placeholder.clear().append($root);
         this.page.afterRender();
     }
 }
